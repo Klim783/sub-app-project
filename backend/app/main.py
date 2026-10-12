@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
+from app.api.users import router as users_router
+from app.api.subscriptions import router as subscriptions_router
+from app.api.payments import router as payments_router
+
 
 settings = get_settings()
 
@@ -17,6 +21,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(users_router)
+app.include_router(subscriptions_router)
+app.include_router(payments_router)
+
+
 
 @app.get("/")
 async def root():
