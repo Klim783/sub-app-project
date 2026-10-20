@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
 from app.api.users import router as users_router
 from app.api.auth import router as auth_router
-# from app.api.subscriptions import router as subscriptions_router
+from app.api.subscriptions import router as subscriptions_router
 # from app.api.payments import router as payments_router
 # from app.api.documents import router as documents_router
 # from app.api.payments_sqs import router as payments_sqs_router
@@ -29,7 +29,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(users_router)
-# app.include_router(subscriptions_router)
+app.include_router(subscriptions_router)
 # app.include_router(payments_router)
 # app.include_router(documents_router)
 # app.include_router(payments_sqs_router)

@@ -30,34 +30,35 @@ export interface Subscription {
   id: number;
   name: string;
   provider: string;
-  category?: string;
   price: number;
-  billing_cycle: 'monthly' | 'yearly';
-  status: 'active' | 'cancelled' | 'expired';
-  renewal_date?: string;
+  currency: string;
+  billing_cycle: string;
+  status: 'active' | 'cancelled' | 'expired' | 'pending';
+  start_date: string;
+  next_billing_date?: string;
   user_id: number;
   created_at: string;
   updated_at?: string;
 }
 
 export interface SubscriptionCreate {
+  user_id: number;
   name: string;
   provider: string;
-  category?: string;
   price: number;
-  billing_cycle: 'monthly' | 'yearly';
-  status?: 'active' | 'cancelled' | 'expired';
-  renewal_date?: string;
+  currency?: string;
+  billing_cycle: string;
+  next_billing_date?: string;
 }
 
 export interface SubscriptionUpdate {
   name?: string;
   provider?: string;
-  category?: string;
   price?: number;
-  billing_cycle?: 'monthly' | 'yearly';
-  status?: 'active' | 'cancelled' | 'expired';
-  renewal_date?: string;
+  currency?: string;
+  billing_cycle?: string;
+  status?: 'active' | 'cancelled' | 'expired' | 'pending';
+  next_billing_date?: string;
 }
 
 // Payment types

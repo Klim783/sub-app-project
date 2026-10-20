@@ -10,7 +10,7 @@ class SubscriptionBase(BaseModel):
 	currency: str = "USD"
 	billing_cycle : str
 
-class SubscriptionCreate(BaseModel):
+class SubscriptionCreate(SubscriptionBase):
 	user_id: int
 	next_billing_date: Optional[datetime] = None
 
@@ -19,6 +19,7 @@ class SubscriptionUpdate(BaseModel):
 	name: Optional[str] = None
 	provider: Optional[str] = None
 	price: Optional[float] = None
+	currency: Optional[str] = None
 	billing_cycle: Optional[str] = None
 	status: Optional[SubscriptionStatus] = None
 	next_billing_date: Optional[datetime] = None
