@@ -3,10 +3,12 @@ name: Deploy
 on:
   push:
     branches: [main]
+  workflow_dispatch:  # Allow manual trigger
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: false  # Disabled until Docker registry credentials are configured
 
     steps:
       - uses: actions/checkout@v4
