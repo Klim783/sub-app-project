@@ -4,6 +4,8 @@ from typing import List
 from app.database import get_db
 from app.models.user import User
 from app.schemas.user import UserCreate, UserResponse
+from app.core.security import get_password_hash
+from app.core.deps import get_current_active_user
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -14,9 +16,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
 	if db_user:
 		raise HTTPException(status_code=400, detail="Email already registered")
 
-	from passlib.context import CryptContext
-	pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-	hashed_password = pwd_context.hash(user.password)
+	hashed_password = get_password_hash(user.password)
 
 	db_user = User(
 		email=user.email,
@@ -33,6 +33,11 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
 def get_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 	users = db.query(User).offset(skip).limit(limit).all()
 	return users
+
+
+@router.get("/me", response_model=UserResponse)
+def get_current_user_info(current_user: User = Depends(get_current_active_user)):
+	return current_user
 
 
 @router.get("/{user_id}", response_model=UserResponse)
